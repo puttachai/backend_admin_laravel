@@ -35,6 +35,10 @@
                                                 <td>{{ $product->qty }}</td>
                                             </tr>
                                             <tr>
+                                                <th>Category</th>
+                                                <td colspan="3">{{ $product->category->name ?? 'N/A' }}</td>
+                                            </tr>
+                                            <tr>
                                                 <th>Description</th>
                                                 <td colspan="3">{{ $product->description }}</td>
                                             </tr>

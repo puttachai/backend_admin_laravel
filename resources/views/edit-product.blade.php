@@ -45,6 +45,18 @@
                                                     <input type="number" class="form-control" name="qty"
                                                         value="{{ $product->qty }}" required>
                                                 </div>
+                                                <div class="form-group col-md-4">
+                                                    <label for="categories_id">Category</label>
+                                                    <select class="form-control" name="categories_id" required>
+                                                        <option value="">-- Select Category --</option>
+                                                        @foreach($categories as $category)
+                                                            <option value="{{ $category->categories_id }}" 
+                                                                {{ $product->categories_id == $category->categories_id ? 'selected' : '' }}>
+                                                                {{ $category->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="description">Description</label>

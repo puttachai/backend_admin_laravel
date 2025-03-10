@@ -20,7 +20,8 @@ class Products extends Model
         'qty',
         'description',
         'image',
-        'seller_id',
+        'emp_id',
+        // 'seller_id',
     ];
 
     // ความสัมพันธ์กับ Seller (ถ้ามี)

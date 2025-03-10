@@ -20,7 +20,9 @@ class Product extends Model
         'qty',
         'description',
         'image',
-        'seller_id',
+        'categories_id',
+        'emp_id',
+        // 'seller_id',
     ];
 
     // ความสัมพันธ์กับ Seller (ถ้ามี)
@@ -28,6 +30,12 @@ class Product extends Model
     {
         return $this->belongsTo(User::class, 'seller_id');
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Categories::class,'categories_id');
+    }
  
 }
+
 ?>

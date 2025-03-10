@@ -33,7 +33,7 @@
             <!-- Brand details -->
             <div class="side-menu-brand d-flex flex-column justify-content-center align-items-center clear mt-3">
                 <img src="{{ asset('qbadminui/img/BrandGekkoShop.png') }}" alt="bran_name" class="brand-img">
-                <a href="{{ route('home') }}" class="brand-name mt-2 ml-2 font-weight-bold">GekkoAdminUI</a>
+                <a href="{{ route('employee.home') }}" class="brand-name mt-2 ml-2 font-weight-bold">GekkoAdminUI</a>
             </div>
             <!-- Side bar menu -->
             <div class="the_menu mt-5">
@@ -157,7 +157,7 @@
                 </p>
                 <!-- Navbar search section -->
                 <div class="navb-search ml-5 d-none d-md-block">
-                    <form action="#" method="POST">
+                    <form action="#" method="POST" style="margin-bottom: 0%">
                         <div class="input-group search-round">
                             <input type="text" class="form-control" placeholder="Search...">
                             <div class="input-group-append">

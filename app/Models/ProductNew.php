@@ -13,19 +13,26 @@ class ProductNew extends Model
     //protected $primaryKey = 'id'; // หรือ 'barcode' ขึ้นอยู่กับการออกแบบของคุณ
 
     protected $fillable = [
+        'emp_id',
         'barcode',
         'name',
         'price',
         'qty',
+        'categories_id',
         'description',
         'image',
-        'seller_id'
+        // 'seller_id'
     ];
 
+    public function category()
+    {
+        return $this->belongsTo(Categories::class,'categories_id');
+    }
+
     // ความสัมพันธ์กับ Seller (ถ้ามี)
-    // public function seller()
-    // {
-    //     return $this->belongsTo(User::class, 'seller_id');
-    // }
+    public function seller()
+    {
+        return $this->belongsTo(User::class, 'seller_id');
+    }
 
 }

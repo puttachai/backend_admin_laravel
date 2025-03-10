@@ -1,86 +1,5 @@
 <?php
 
-// namespace App\Http\Controllers;
-
-// use App\Http\Controllers\SellerController;
-
-// use Illuminate\Support\Facades\Route;
-// use Illuminate\Support\Facades\Auth;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-// Auth::routes();
-
-// Route::get('/create-product', function () {
-//     return view('create_product');
-// });
-
-
-// เพิ่ม Route นี้เพื่อให้สามารถเข้าถึง registerAdmin.blade.php
-// Route::get('/register-admin', function () {
-//     return view('auth.registerAdmin');
-// })->name('register.admin');
-
-// // Route::get('/dashboard', function () {
-// //     return view('dashboard');
-// // })->name('dashboard');
-
-// // Route::get('/indextest', function () {
-// //     return view('indextest');
-// // });
-
-// // Route สำหรับบันทึกผลิตภัณฑ์ใหม่
-// //Route::post('/products', [ProductController::class, 'store'])->name('product.store');
-
-// Route::get('/home', 'HomeController@index')->name('home');
-
-// // Route::get('/indextest', [SellerController::class, 'indextest'])->name('indextest.index');
-
-// Route::get('/indextest', [SellerController::class, 'showSellers'])->name('indextest');;
-
-
-// Route::view('/create-product', 'create_product');
-
-// use App\Http\Controllers\ProductController;
-
-// // Route สำหรับบันทึกผลิตภัณฑ์ใหม่
-// Route::post('/products', [ProductController::class, 'store'])->name('product.store');
-
-// Route::get('/product', [ProductController::class, 'index'])->name('product.index');
-// //ตัวใหม่
-// Route::get('/categories', [ProductController::class, 'categories'])->name('categories.categories');
-// //  create 
-// Route::post('/Create_categories', [ProductController::class, 'categories'])->name('categories.categories');
-
-// //  show
-// Route::get('/categories', [ProductController::class, 'store'])->name('categories.store');
-// //  create 
-// Route::post('/Create_categories', [ProductController::class, 'categories'])->name('Create_categories.categories');
-
-// Route::get('/show/{id}', [ProductController::class, 'show'])->name('product.show');
-
-// Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
-
-
-// Route::get('/edit-product/{id}', 'ProductController@edit')->name('product.edit');
-
-// Route::put('/product/update/{id}', [ProductController::class, 'update'])->name('product.update');
-//  -->
-
-
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\SellerController;
@@ -135,7 +54,12 @@ Route::middleware(['auth:employee'])->group(function () {
 // Route::middleware(['auth'])->group(function () {
 //     Route::get('/home', [HomeController::class, 'index'])->name('home'); // ใช้เพียงบรรทัดนี้
 // });
-Route::get('/home', [HomeController::class, 'index'])->name('home'); // ใช้เพียงบรรทัดนี้
+
+// user ใช้
+// Route::get('/home', [HomeController::class, 'index'])->name('home'); // ใช้เพียงบรรทัดนี้
+
+
+
 // Route::middleware(['auth'])->group(function () {
 //     Route::get('/product', [ProductController::class, 'index'])->name('product.index');
 // });
@@ -155,6 +79,8 @@ Route::get('/product', [ProductController::class, 'index'])->name('product.index
         return view('create_product');
     });
 
+    Route::get('/create-product', [ProductController::class, 'createProduct'])->name('create-product');
+
     // Route::get('create-categoriestest', function () {
     //     return view('create_categories_product');
     // })->name('create.categoriestest'); 
@@ -169,7 +95,8 @@ Route::get('/product', [ProductController::class, 'index'])->name('product.index
     Route::get('/product', [ProductController::class, 'index'])->name('product.index');
     Route::get('/show/{id}', [ProductController::class, 'show'])->name('product.show');
     Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
-    Route::get('/edit-product/{id}', 'ProductController@edit')->name('product.edit');
+    // Route::get('/edit-product/{id}', 'ProductController@edit')->name('product.edit');
+    Route::get('/edit-product/{id}', [ProductController::class, 'edit'])->name('product.edit');
     Route::put('/product/update/{id}', [ProductController::class, 'update'])->name('product.update');
 
     // Categories routes

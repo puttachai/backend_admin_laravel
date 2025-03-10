@@ -14,6 +14,14 @@ class ProductController extends Controller
     {
         $products = Product::all();
         return view('product', compact('products'));
+        // return view('product', compact('products', 'categories'));
+    }
+    public function createProduct()
+    {
+        // $products = Product::all();
+        $categories = Categories::all(); // Fetch all categories or modify this based on your needs
+        return view('Create_product', compact('categories'));
+        // return view('product', compact('products', 'categories'));
     }
 
     //categories
@@ -44,12 +52,21 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 
-        $seller_id = session('seller_id');  // ดึงค่า seller_id จาก session
+            // บันทึกข้อมูลที่ได้รับจาก request
+        Log::info('Request Data: ', $request->all());
+        
+        // ตรวจสอบค่า emp_id ก่อนการบันทึก
+        $emp_id = auth()->user()->emp_id;
+        Log::info('emp_id to be saved: ', ['emp_id' => $emp_id]);
 
+        // $seller_id = session('seller_id');  // ดึงค่า seller_id จาก session
+         // ตรวจสอบค่า seller_id
+        //  Log::info('Log seller_id:', ['seller_id' => $seller_id]);
+        
          // ตรวจสอบว่ามี seller_id หรือไม่
-        if (!$seller_id) {
-            return redirect()->route('login')->withErrors('กรุณาล็อกอินก่อน');
-        }
+        // if (!$seller_id) {
+        //     return redirect()->route('login')->withErrors('กรุณาล็อกอินก่อน');
+        // }
 
         $request->validate([
             'barcode' => 'required|string|max:255',
@@ -57,12 +74,10 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'qty' => 'required|integer',
             'description' => 'nullable|string',
+            'categories_id' => 'required|exists:categories,id', // ตรวจสอบว่าหมวดหมู่มีอยู่ในฐานข้อมูล
             'image-upload' => 'nullable|image|mimes:jpg,jpeg,png,gif,webp|max:2048', // ข้อกำหนดสำหรับการอัปโหลดภาพ
             // 'seller_id' => 'required', // Ensure this is validated
             ]);
-            
-        // ตรวจสอบค่า seller_id
-        Log::info('Storing product with seller_id:', ['seller_id' => $seller_id]);
 
         $imagePath = null;
         // $secondImagePath = null;
@@ -86,18 +101,21 @@ class ProductController extends Controller
         // บันทึกข้อมูลผลิตภัณฑ์ // ใช้พาธของภาพ
         ProductNew::create([
         // Product::create([
+            'emp_id' => $emp_id,
             'barcode' => $request->input('barcode'),
             'name' => $request->input('name'),
             'price' => $request->input('price'),
             'qty' => $request->input('qty'),
             'description' => $request->input('description'),
+            'categories_id' => $request->input('categories_id'),  // เก็บหมวดหมู่ที่เลือก
             'image' => $imagePath, 
-            'seller_id' => $seller_id // ใช้ ID ของผู้ใช้งานที่ล็อกอิน
+            
+            // 'seller_id' => $seller_id // ใช้ ID ของผู้ใช้งานที่ล็อกอิน
+            
             // 'seller_id' => auth()->user()->id, // ใช้ ID ของผู้ใช้งานที่ล็อกอิน
             //'second_image' => $secondImagePath, // บันทึกพาธของภาพที่สอง (ถ้าต้องการ)
             
         ]);
-        
 
         return redirect()->route('product.index')->with('status', 'Product created successfully!');
     }
@@ -106,6 +124,7 @@ class ProductController extends Controller
     //store_categories
     public function store_categories(Request $request)
     {
+        
         $request->validate([
             'type_barcode' => 'required|string|max:255',
             'type_name' => 'required|string|max:255',
@@ -162,35 +181,28 @@ class ProductController extends Controller
 
         public function edit($id)
         {
+            Log::info('Log id product: ', ['id' => $id]);
             $product = Product::findOrFail($id);
-            return view('edit-product', compact('product'));
+            $categories = Categories::all(); // ดึงข้อมูลหมวดหมู่ทั้งหมด
+            return view('edit-product', compact('product', 'categories'));
         }
-
-        // public function update(Request $request, $id)
-        // {
-        //     $product = Product::findOrFail($id);
-        //     $product->update([
-        //         'barcode' => $request->barcode,
-        //         'name' => $request->name,
-        //         'price' => $request->price,
-        //         'qty' => $request->qty,
-        //         'description' => $request->description,
-        //     ]);
-
-        //     return redirect()->route('product.store')->with('status', 'updated');
-        // }
 
 
         public function update(Request $request, $id)
         {
+            Log::info('Log request product: ', ['request' => $request]);
+
             $product = Product::findOrFail($id);
 
+            Log::info('Log product: ', ['product' => $product]);
+            
             $request->validate([
                 'barcode' => 'required|string|max:255',
                 'name' => 'required|string|max:255',
                 'price' => 'required|numeric',
                 'qty' => 'required|integer',
                 'description' => 'nullable|string',
+                'categories_id' => 'required|exists:categories,categories_id', // ตรวจสอบว่ามีหมวดหมู่นี้จริง
             ]);
 
             $product->update([
@@ -198,27 +210,42 @@ class ProductController extends Controller
                 'name' => $request->input('name'),
                 'price' => $request->input('price'),
                 'qty' => $request->input('qty'),
+                'categories_id' => $request->categories_id, // บันทึกหมวดหมู่ที่เลือก
                 'description' => $request->input('description'),
             ]);
 
             return redirect()->route('product.index')->with('status', 'Product updated successfully!');
         }
 
-
-    
-    //edit
-    public function edits($id)
-        {
-            $product = Product::findOrFail($id);
-            return view('products.edit', compact('product'));
-        }
-
+        // Method สำหรับลบข้อมูล product
         public function destroy($id)
         {
-            $product = Product::findOrFail($id);
+            // ค้นหาผลิตภัณฑ์ที่มี id ที่ตรงกับที่ได้รับจาก URL
+            $product = ProductNew::findOrFail($id);
+
+            // Log ข้อมูลการลบ
+            Log::info("Deleting product with ID: {$id}", ['product' => $product]);
+
+            // ลบข้อมูลผลิตภัณฑ์
             $product->delete();
-            return redirect()->route('product.index')->with('success', 'Product deleted successfully');
+
+            // ส่งผู้ใช้กลับไปที่หน้าแสดงรายการผลิตภัณฑ์
+            return redirect()->route('product.index')->with('status', 'Product deleted successfully!');
         }
+    
+    //edit
+    // public function edits($id)
+    //     {
+    //         $product = Product::findOrFail($id);
+    //         return view('products.edit', compact('product'));
+    //     }
+
+    //     public function destroy($id)
+    //     {
+    //         $product = Product::findOrFail($id);
+    //         $product->delete();
+    //         return redirect()->route('product.index')->with('success', 'Product deleted successfully');
+    //     }
 
 
         

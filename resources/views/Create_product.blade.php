@@ -60,6 +60,19 @@
                                             <input type="file" class="form-control " name="image-upload" id="image-upload">
                                         </div>
                                     </div>
+                                    <div class="form-group col-md-12" style="padding-right: 0;padding-left: 0;">
+                                        <label for="categories_id">Category</label>
+                                        <select class="form-control" name="categories_id" required>
+                                            <option value="">-- Select Category --</option>
+                                            @foreach($categories as $category)
+                                                <option value="{{ $category->id }}" 
+                                                    {{ old('categories_id') == $category->id ? 'selected' : '' }}>
+                                                    {{ $category->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    
                                     <div class="form-group">
                                         <label for="note" class="col-form-label">Description</label>
                                         <textarea name="description" id="" rows="5" class="form-control" placeholder="Description"></textarea>
