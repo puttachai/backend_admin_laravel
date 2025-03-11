@@ -16,8 +16,10 @@
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{{ asset('qbadminui/fontawesome/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('qbadminui/css/vendor/bootstrap-4.3.1/bootstrap.min.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ mix('qbadminui/css/main.css') }}">
-    
+    {{-- <link href="{{ mix('css/app.css') }}" rel="stylesheet"> --}}
+
     <style>
     </style>
     <meta name="theme-color" content="#fafafa">
@@ -53,7 +55,7 @@
                         <li class="side-menu-item px-3"><a href="{{ route('employee.home') }}" class="w-100 py-3 pl-4">Dashboard</a>
                         {{-- <li class="side-menu-item px-3"><a href="{{ route('home') }}" class="w-100 py-3 pl-4">Dashboard</a> --}}
                         </li>
-                        <li class="side-menu-item px-3"><a href="{{ route('indextest') }}" class="w-100 py-3 pl-4">seller</a></li>
+                        <li class="side-menu-item px-3"><a href="{{ route('indextest') }}" class="w-100 py-3 pl-4">Seller</a></li>
 
                         <li class="side-menu-item px-3"><a href="#" class="w-100 py-3 pl-4 sub-menu-parent"
                                 data-toggle="collapse" data-target="#sub_menu_12" aria-expanded="false"
@@ -84,27 +86,45 @@
                         <!-- Sub menu parent -->
                         <li class="side-menu-item px-3"><a href="#" class="w-100 py-3 pl-4 sub-menu-parent"
                                 data-toggle="collapse" data-target="#form-sub-menu" aria-expanded="false"
-                                aria-controls="form-sub-menu">Form Elements</a></li>
+                                aria-controls="form-sub-menu">Orders</a></li>
                         <!-- Sub menu -->
                         <div id="form-sub-menu" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                            <ul class="side-sub-menu p-0">
-                                <li class="side-sub-menu-item px-3"><a href="form_basic.html" class="w-100 pl-4">Basic
-                                        Elements</a></li>
-                                <li class="side-sub-menu-item px-3"><a href="form_basic_action.html"
-                                        class="w-100 pl-4">Basic Action Bar</a></li>
-                                <li class="side-sub-menu-item px-3"><a href="form_layout.html" class="w-100 pl-4">Form
-                                        layouts</a></li>
-                                <li class="side-sub-menu-item px-3"><a href="multi_column_forms.html"
-                                        class="w-100 pl-4">Multi Column Forms</a></li>
-                                <li class="side-sub-menu-item px-3"><a href="input_group.html" class="w-100 pl-4">Input
-                                        Group</a></li>
-                                <li class="side-sub-menu-item px-3"><a href="form_validation.html"
-                                        class="w-100 pl-4">Form Validation</a></li>
+                            <ul class="side-sub-menu p-0"> {{-- order-list--}}
+                                <li class="side-sub-menu-item px-3"><a href="{{ route('orders.index') }}" class="w-100 pl-4">รายการสั่งซื้อ</a></li>
+                                {{-- <li class="side-sub-menu-item px-3"><a href="{{ route('orders.show') }}" {{-- order-details--
+                                    class="w-100 pl-4">รายละเอียดคำสั่งซื้อ</a>
+                                </li> --}}
+                            </ul>
+                        </div>
+
+                        <li class="side-menu-item px-3"><a href="#" class="w-100 py-3 pl-4 sub-menu-parent"
+                                data-toggle="collapse" data-target="#form-sub-menu13" aria-expanded="false"
+                                aria-controls="form-sub-menu13">Users</a></li>
+                        <!-- Sub menu -->
+                        <div id="form-sub-menu13" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                            <ul class="side-sub-menu p-0"> {{--{{ route('user-list') }}--}}
+                                <li class="side-sub-menu-item px-3"><a href="{{ route('users.index') }}" class="w-100 pl-4">user ผู้ใช้งาน</a></li>
+                                <li class="side-sub-menu-item px-3"><a href="" {{--{{ route('manage-status') }}--}}
+                                    class="w-100 pl-4">จัดการสถานะ</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <li class="side-menu-item px-3"><a href="#" class="w-100 py-3 pl-4 sub-menu-parent"
+                                data-toggle="collapse" data-target="#form-sub-menu13" aria-expanded="false"
+                                aria-controls="form-sub-menu13">Sellers</a></li>
+                        <!-- Sub menu -->
+                        <div id="form-sub-menu13" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                            <ul class="side-sub-menu p-0"> {{--{{ route('seller-list') }}--}}
+                                <li class="side-sub-menu-item px-3"><a href="" class="w-100 pl-4">รายการผู้ขาย</a></li>
+                                <li class="side-sub-menu-item px-3"><a href="" {{--{{ route('review-approve') }}--}}
+                                    class="w-100 pl-4">ตรวจสอบ/อนุมัติ</a>
+                                </li>
                             </ul>
                         </div>
 
                         <!-- Sub menu parent -->
-                        <li class="side-menu-item px-3"><a href="#" class="w-100 py-3 pl-4 sub-menu-parent"
+                        {{-- <li class="side-menu-item px-3"><a href="#" class="w-100 py-3 pl-4 sub-menu-parent"
                                 data-toggle="collapse" data-target="#chart-sub-menu" aria-expanded="false"
                                 aria-controls="chart-sub-menu">Charts</a></li>
                         <!-- Sub menu -->
@@ -113,10 +133,10 @@
                                 <li class="side-sub-menu-item px-3"><a href="chart_js.html" class="w-100 pl-4">Chart
                                         Js</a></li>
                             </ul>
-                        </div>
+                        </div> --}}
 
                         <!-- Sub menu parent -->
-                        <li class="side-menu-item px-3"><a href="#" class="w-100 py-3 pl-4 sub-menu-parent"
+                        {{-- <li class="side-menu-item px-3"><a href="#" class="w-100 py-3 pl-4 sub-menu-parent"
                                 data-toggle="collapse" data-target="#table-sub-menu" aria-expanded="false"
                                 aria-controls="table-sub-menu">Tables</a></li>
                         <!-- Sub menu -->
@@ -127,7 +147,7 @@
                                 <li class="side-sub-menu-item px-3"><a href="datatables.html"
                                         class="w-100 pl-4">DataTables</a></li>
                             </ul>
-                        </div>
+                        </div> --}}
                     </ul>
                 </div>
             </div>
@@ -149,7 +169,7 @@
             </div>
 
             <!-- The navbar -->
-            <nav class="navbar navbar-expand navbar-light bg-light py-3">
+            <nav class="navbar navbar-expand navbar-light bg-light px-4">
                 <p class="navbar-brand mb-0 pb-0">
                     <span></span>
                     <span></span>
@@ -294,7 +314,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.1/dist/echarts.min.js"></script>
 
 </body>

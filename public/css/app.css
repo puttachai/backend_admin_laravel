@@ -1,4 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
+@import 'node_modules/bootstrap/dist/css/bootstrap.min.css';
+
 
 /*!
  * Bootstrap v4.6.2 (https://getbootstrap.com/)
@@ -10935,3 +10937,6 @@ a.text-dark:focus {
   }
 }
 
+  .custom-order-detail{
+    background-color: var(--danger);
+  }

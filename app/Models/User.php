@@ -61,5 +61,9 @@ class User extends Authenticatable
         return $this->seller ? $this->seller->id : null;
     }
 
+    public function order()
+    {
+        return $this->hasMany(Order::class);
+    }
     
 }

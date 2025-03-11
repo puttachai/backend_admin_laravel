@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\UserController;
+
+
 use App\Models\Employee;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\EmployeeController;
@@ -49,7 +53,13 @@ Route::middleware(['auth:employee'])->group(function () {
 
     Route::get('/employee/home', [HomeController::class, 'index'])->name('employee.home');
 
-    
+
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{user_id}', [OrderController::class, 'show'])->name('orders.show');
+
+    Route::resource('users', UserController::class);
+
+
 // กำหนด route สำหรับหน้า Home
 // Route::middleware(['auth'])->group(function () {
 //     Route::get('/home', [HomeController::class, 'index'])->name('home'); // ใช้เพียงบรรทัดนี้
