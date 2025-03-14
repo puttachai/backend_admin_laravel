@@ -47,5 +47,4 @@ class Seller extends Model
         'id_card_copy',
     ];
 
-
 }

@@ -4,10 +4,10 @@
 
 @section('content')
 <div class="container mt-4">
-    <h2 class="text-center mb-4">รายชื่อผู้ใช้</h2>
+    <h2 class="text-center mb-4">รายชื่อผู้ขาย</h2>
 
     <div class="mb-3"> {{--{{ route('users.create') }}--}}
-        <a href="{{ route('users.create') }}" class="btn btn-success">สร้างผู้ใช้ใหม่</a>
+        <a href="{{ route('sellers.create') }}" class="btn btn-success">สร้างผู้ขายใหม่</a>
     </div>
 
     <div class="table-responsive shadow-lg">
@@ -16,27 +16,29 @@
                 <tr>
                     <th>ชื่อ</th>
                     <th>อีเมล</th>
+                    <th>ร้านค้า</th>
                     <th>วันที่สมัคร</th>
                     <th>การจัดการ</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($users as $user)
+                @foreach ($sellers as $user)
                     <tr>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
+                        <td>{{ $user->shop_name }}</td>
                         {{-- <td>{{ $user->created_at->format('d/m/Y H:i') }}</td> --}}
                         <td>{{ $user->created_at ? $user->created_at->format('d/m/Y H:i') : '-' }}</td>
                         <td>
-                            {{-- {{ route('users.show', $user->id) }} --}}
-                            <a href="{{ route('users.show', $user->id) }}" class="btn btn-info btn-sm">ดูรายละเอียด</a>
-                            {{-- {{ route('users.edit', $user->id) }} --}}
-                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm">แก้ไข</a>
+                            {{-- {{ route('sellers.show', $user->id) }} --}}
+                            <a href="{{ route('sellers.show', $user->id) }}" class="btn btn-info btn-sm">ดูรายละเอียด</a>
+                            {{-- {{ route('sellers.edit', $user->id) }} --}}
+                            <a href="{{ route('sellers.edit', $user->id) }}" class="btn btn-warning btn-sm">แก้ไข</a>
 
                             <!-- Delete Form -->
-                            {{-- {{ route('users.destroy', $user->id) }} --}}
+                            {{-- {{ route('sellers.destroy', $user->id) }} --}}
                             {{-- <form action="" method="POST" style="display:inline;"> --}}
-                            <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('sellers.destroy', $user->id) }}" method="POST" style="display:inline;">
 
                                 @csrf
                                 @method('DELETE')
@@ -51,7 +53,7 @@
 
     <!-- Pagination -->
     <div class="pagination-container d-flex justify-content-center mt-4">
-        {{ $users->links('pagination::bootstrap-4') }}
+        {{ $sellers->links('pagination::bootstrap-4') }}
     </div>
 </div>
 @endsection

@@ -31,7 +31,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <h5 class="card-title float-left">Table Products</h5>
+                                        <h5 class="card-title float-left font-weight-bold">Table Products</h5>
                                         <a href="{{ url('/create-product') }}" class="btn btn-success float-right mb-3"><i class="fa fa-plus"></i> Add New</a>
                                     </div>
                                 </div>

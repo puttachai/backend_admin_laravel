@@ -55,7 +55,8 @@
                         <li class="side-menu-item px-3"><a href="{{ route('employee.home') }}" class="w-100 py-3 pl-4">Dashboard</a>
                         {{-- <li class="side-menu-item px-3"><a href="{{ route('home') }}" class="w-100 py-3 pl-4">Dashboard</a> --}}
                         </li>
-                        <li class="side-menu-item px-3"><a href="{{ route('indextest') }}" class="w-100 py-3 pl-4">Seller</a></li>
+                        {{-- <li class="side-menu-item px-3"><a href="{{ route('indextest') }}" class="w-100 py-3 pl-4">Seller</a></li> --}}
+
 
                         <li class="side-menu-item px-3"><a href="#" class="w-100 py-3 pl-4 sub-menu-parent"
                                 data-toggle="collapse" data-target="#sub_menu_12" aria-expanded="false"
@@ -91,6 +92,7 @@
                         <div id="form-sub-menu" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                             <ul class="side-sub-menu p-0"> {{-- order-list--}}
                                 <li class="side-sub-menu-item px-3"><a href="{{ route('orders.index') }}" class="w-100 pl-4">รายการสั่งซื้อ</a></li>
+                                <li class="side-sub-menu-item px-3"><a href="{{ route('payment.slips') }}" class="w-100 py-3 pl-4">รายการสลิปการชำระเงิน</a></li>
                                 {{-- <li class="side-sub-menu-item px-3"><a href="{{ route('orders.show') }}" {{-- order-details--
                                     class="w-100 pl-4">รายละเอียดคำสั่งซื้อ</a>
                                 </li> --}}
@@ -104,22 +106,25 @@
                         <div id="form-sub-menu13" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                             <ul class="side-sub-menu p-0"> {{--{{ route('user-list') }}--}}
                                 <li class="side-sub-menu-item px-3"><a href="{{ route('users.index') }}" class="w-100 pl-4">user ผู้ใช้งาน</a></li>
-                                <li class="side-sub-menu-item px-3"><a href="" {{--{{ route('manage-status') }}--}}
+                                {{--{{ route('manage-status') }}--}}
+                                {{-- <li class="side-sub-menu-item px-3"><a href="" 
                                     class="w-100 pl-4">จัดการสถานะ</a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
 
                         <li class="side-menu-item px-3"><a href="#" class="w-100 py-3 pl-4 sub-menu-parent"
-                                data-toggle="collapse" data-target="#form-sub-menu13" aria-expanded="false"
-                                aria-controls="form-sub-menu13">Sellers</a></li>
+                                data-toggle="collapse" data-target="#form-sub-menu14" aria-expanded="false"
+                                aria-controls="form-sub-menu14">Sellers</a></li>
                         <!-- Sub menu -->
-                        <div id="form-sub-menu13" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div id="form-sub-menu14" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                             <ul class="side-sub-menu p-0"> {{--{{ route('seller-list') }}--}}
-                                <li class="side-sub-menu-item px-3"><a href="" class="w-100 pl-4">รายการผู้ขาย</a></li>
-                                <li class="side-sub-menu-item px-3"><a href="" {{--{{ route('review-approve') }}--}}
+                                <li class="side-sub-menu-item px-3"><a href="{{ route('sellers.index') }}" class="w-100 pl-4">รายการผู้ขาย</a></li>
+                                <li class="side-sub-menu-item px-3"><a href="{{ route('sellers.products', ['seller_id' => 1]) }}" class="w-100 pl-4">รายการสินค้าของผู้ขาย</a></li>
+                                {{--{{ route('review-approve') }}--}}
+                                {{-- <li class="side-sub-menu-item px-3"><a href="" 
                                     class="w-100 pl-4">ตรวจสอบ/อนุมัติ</a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
 

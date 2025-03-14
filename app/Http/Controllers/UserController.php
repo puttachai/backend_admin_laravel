@@ -19,7 +19,7 @@ class UserController extends Controller
     // แสดงฟอร์มสร้างผู้ใช้ใหม่
     public function create()
     {
-        return view('users.create');
+        return view('user.create-user');
     }
 
     // บันทึกผู้ใช้ใหม่
@@ -27,12 +27,16 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
+            'phoneNumber' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
         ]);
 
         User::create([
             'name' => $request->name,
+            'username' => $request->username,
+            'phoneNumber' => $request->phone,
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
@@ -43,15 +47,19 @@ class UserController extends Controller
     // แสดงข้อมูลผู้ใช้
     public function show($id)
     {
-        $user = User::findOrFail($id);
-        return view('users.show', compact('user'));
+        // $users = User::find($id);
+        $users = User::findOrFail($id);
+        if (!$users) {
+            return redirect()->route('user.list-user')->with('status', 'user not found');
+        }
+        return view('user.show-user', compact('users'));
     }
 
     // แสดงฟอร์มแก้ไขข้อมูลผู้ใช้
     public function edit($id)
     {
-        $user = User::findOrFail($id);
-        return view('users.edit', compact('user'));
+        $users = User::findOrFail($id);
+        return view('user.edit-user', compact('users'));
     }
 
     // อัพเดตข้อมูลผู้ใช้
@@ -59,15 +67,38 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
+            'phoneNumber' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id,
+            'password' => 'nullable|confirmed|min:8', // ทำให้รหัสผ่านเป็น optional
         ]);
 
+        // $user = User::findOrFail($id);
+        // $user->update([
+        //     'name' => $request->name,
+        //     'username' => $request->username,
+        //     'phoneNumber' => $request->phoneNumber,
+        //     'email' => $request->email,
+        //     'password' => $request->password ? bcrypt($request->password) : $user->password,
+        // ]);
+
         $user = User::findOrFail($id);
-        $user->update([
+
+        // ตรวจสอบว่ามีการกรอกรหัสผ่านใหม่หรือไม่
+        $userData = [
             'name' => $request->name,
+            'username' => $request->username,
+            'phoneNumber' => $request->phoneNumber,
             'email' => $request->email,
-            'password' => $request->password ? bcrypt($request->password) : $user->password,
-        ]);
+        ];
+    
+        // ถ้ามีการกรอกรหัสผ่านใหม่ ให้ทำการเข้ารหัสและอัพเดต
+        if ($request->filled('password')) {
+            $userData['password'] = bcrypt($request->password);
+        }
+    
+        // อัพเดตข้อมูลผู้ใช้
+        $user->update($userData);
 
         return redirect()->route('users.index')->with('success', 'ข้อมูลผู้ใช้ถูกอัพเดต');
     }

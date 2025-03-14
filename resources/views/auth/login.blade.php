@@ -9,10 +9,12 @@
                 <!-- Row -->
                 <div class="row">
                     <!-- Left side -->
-                    <div class="col-md-6 border-0 border-md-right">
+                    <div class="col-md-12 border-0">
+                    {{-- <div class="col-md-6 border-0 border-md-right"> --}}
                         <!-- Brand -->
                         <div class="login-brand m-3 m-md-0 d-flex justify-content-center align-items-center">
                             <img src="{{ asset('qbadminui/img/image.png') }}" alt="image" style="width: 350px; height: 350px; object-fit: cover;" class="w-50 pt-4">
+                            {{-- <img src="{{ asset('qbadminui/img/image.png') }}" alt="image" style="width: 350px; height: 350px; object-fit: cover;" class="w-50 pt-4"> --}}
                         </div>
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
@@ -54,11 +56,17 @@
                         </form>
                     </div>
                     <!-- Right side -->
-                    <div class="col-md-6 d-flex flex-column justify-content-center align-items-center pt-3 pt-md-0">
+                    {{-- <div class="col-md-6 d-flex flex-column justify-content-center align-items-center border: 2px solid black; border-radius: 25px; pt-3 pt-md-0">
+                        <img src="{{ asset('qbadminui/img/shop.png') }}" alt="image" style="width: 250px; height: 250px; object-fit: cover;" class="w-50 pt-4">
+                        <div class="">
+                            <h5 class="btn btn-success float-right mb-3 "style="pointer-events: none;">Welcom to GekkoShop </h5>
+                        </div>
+                    </div> --}}
+                    {{-- <div class="col-md-6 d-flex flex-column justify-content-center align-items-center pt-3 pt-md-0">
                         <button class="btn btn-raised btn-google btn-icon m-2 badge-pill btn-block w-75"><i class="fab fa-google"></i> <p class="d-inline">Sign up with Google</p></button>
                         <button class="btn btn-raised btn-facebook btn-icon m-2 badge-pill btn-block w-75"><i class="fab fa-facebook-f"></i> <p class="d-inline">Sign up with Facebook</p></button>
                         <a href="{{ route('register') }}" class="w-75"><button class="btn btn-primary btn-outline-primary badge-pill btn-block"><p class="d-inline">Sign Up</p></button></a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

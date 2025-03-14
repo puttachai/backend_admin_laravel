@@ -10,15 +10,35 @@ use App\Models\OrderDetail;
 class OrderController extends Controller
 {
     // แสดงรายการสั่งซื้อทั้งหมด
+    // public function index()
+    // {
+    //     $orders = Order::latest()->paginate(10);
+    //     // $orders = Order::latest()->get();
+    //     Log::info('Log orders :', ['orders' => $orders]);
+    //     // dd($orders);
+    //     return view('order-list', compact('orders'));
+    // }
+    
     public function index()
     {
         $orders = Order::latest()->paginate(10);
-        // $orders = Order::latest()->get();
-        Log::info('Log orders :', ['orders' => $orders]);
-        // dd($orders);
-        return view('order-list', compact('orders'));
+    
+        // ดึงค่าที่เป็นไปได้ของ Status จากฐานข้อมูล
+        $statuses = Order::select('Status')->distinct()->pluck('Status');
+    
+        return view('order-list', compact('orders', 'statuses'));
     }
-
+    
+    // ฟังก์ชันอัปเดตสถานะ
+    public function updateStatus(Request $request, $id)
+    {
+        $order = Order::findOrFail($id);
+        $request->validate(['status' => 'required|string']);
+    
+        $order->update(['Status' => $request->status]);
+    
+        return response()->json(['success' => true]);
+    }
     // แสดงรายละเอียดคำสั่งซื้อ
     public function show($user_id)
     {

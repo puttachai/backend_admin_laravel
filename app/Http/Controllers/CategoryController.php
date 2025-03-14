@@ -36,30 +36,75 @@ class CategoryController extends Controller
         }
 
 
-        public function update(Request $request, $id)
-        {
-            $categories = Categories::findOrFail($id);
+        // public function update(Request $request, $id)
+        // {
+        //     $categories = Categories::findOrFail($id);
 
-            // ตรวจสอบ validate
-            $request->validate([
-                'name' => 'required|string|max:255',
-                'description' => 'nullable|string',
-                'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            ]);
+        //     // ตรวจสอบ validate
+        //     $request->validate([
+        //         'name' => 'required|string|max:255',
+        //         'description' => 'nullable|string',
+        //         'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        //     ]);
 
-            // อัปโหลดรูปภาพใหม่ ถ้ามี
-            if ($request->hasFile('image')) {
-                $imagePath = $request->file('image')->store('categories', 'public');
-                $categories->image = $imagePath;
+        //     // อัปโหลดรูปภาพใหม่ ถ้ามี
+        //     if ($request->hasFile('image')) {
+        //         $imagePath = $request->file('image')->store('categories', 'public');
+        //         $categories->image = $imagePath;
+        //     }
+
+        //     // อัปเดตข้อมูล
+        //     $categories->name = $request->name;
+        //     $categories->description = $request->description;
+        //     $categories->save();
+
+        //     return redirect()->route('categories.index')->with('success', 'Category updated successfully');
+        // }
+
+        
+    public function update(Request $request, $id)
+    {
+        $categories = Categories::findOrFail($id);
+
+        Log::info('LOG categories Log: ', ['categories' => $categories]);
+        Log::info('LOG request Log: ', ['request' => $request]);
+
+        // ตรวจสอบ validate
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        // ตรวจสอบว่ามีไฟล์รูปภาพใหม่หรือไม่
+        if ($request->hasFile('image')) {
+            // ลบรูปภาพเก่าออกจากโฟลเดอร์
+            if ($categories->image) {
+                $oldImagePath = 'D:\project-e-commerce-react\frontend\public\images\categories' . $categories->image;
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
             }
 
-            // อัปเดตข้อมูล
-            $categories->name = $request->name;
-            $categories->description = $request->description;
-            $categories->save();
+            // อัปโหลดรูปภาพใหม่
+            $image = $request->file('image');
+            $imagePath = $image->store('', 'product_images');
 
-            return redirect()->route('categories.index')->with('success', 'Category updated successfully');
+            // ย้ายไฟล์ใหม่ไปยังโฟลเดอร์เป้าหมาย
+            $destinationPath = 'D:\project-e-commerce-react\frontend\public\images\categories';
+            $image->move($destinationPath, $imagePath);
+
+            // บันทึกชื่อรูปภาพใหม่ลงฐานข้อมูล
+            $categories->image = $imagePath;
         }
+
+        // อัปเดตข้อมูลอื่น ๆ
+        $categories->name = $request->name;
+        $categories->description = $request->description;
+        $categories->save();
+
+        return redirect()->route('categories.index')->with('success', 'Category updated successfully');
+    }
 
 
          //show
@@ -91,17 +136,6 @@ class CategoryController extends Controller
             'image' => $request->file('image') ? $request->file('image')->getClientOriginalName() : null,
         ]);
 
-
-        // validate ใช้แล้วไม่บันทึกลง ฐานข้อมูล Database
-        // ตรวจสอบค่าที่กรอกในฟอร์ม 
-        // $request->validate([
-        //     'id' => 'required|integer|max:999',
-        //     'name' => 'required|string|max:100',
-        //     'description' => 'nullable|string',
-        //     'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // กำหนดประเภทไฟล์ที่อนุญาต
-        // ]);
-
-
         // Log ค่าที่รับจากฟอร์ม
         Log::info('Category data received:', [
             'id' => $request->id,
@@ -121,7 +155,7 @@ class CategoryController extends Controller
             $imagePath = $image->store('', 'product_images');
 
             // Copy to another directory in a different drive
-            $secondDirectoryPath = 'D:\project-e-commerce-react\frontend\public\images\product'; // ไดร์ฟและโฟลเดอร์ปลายทางที่ต้องการ
+            $secondDirectoryPath = 'D:\project-e-commerce-react\frontend\public\images\categories'; // ไดร์ฟและโฟลเดอร์ปลายทางที่ต้องการ
             // Move the file to the second location
             $image->move($secondDirectoryPath,$imagePath);//$imageName
 
@@ -148,7 +182,8 @@ class CategoryController extends Controller
 
 
         // คืนค่ากลับไปยังหน้าฟอร์มและแสดงข้อความสถานะ
-        return redirect()->route('categories')->with('status', 'Category created successfully!');
+        return redirect()->route('category')->with('status', 'Category created successfully!');
+        // return redirect()->route('categories')->with('status', 'Category created successfully!');
     }
 
 

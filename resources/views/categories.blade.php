@@ -66,7 +66,7 @@
                                                     <a href="{{ route('categories.edit', ['id' => $categories->categories_id]) }}" class="btn btn-sm btn-info">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
-                                                    <a href="#" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-delete-{{ $categories->categories_id }}">
+                                                    <a href="#" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-delete-{{ $categories->id }}">
                                                         <i class="fa fa-trash"></i>
                                                     </a>
                                                     

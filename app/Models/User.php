@@ -19,8 +19,10 @@ class User extends Authenticatable
 
      protected $table = 'users';
 
+     protected $primaryKey = 'id'; // ระบุ Primary Key ที่ถูกต้อง
+
     protected $fillable = [
-        'name', 'email', 'password', 'statusUser',
+        'id', 'name', 'email', 'password', 'statusUser', 'created_at', 'phoneNumber'
     ];
 
     /**

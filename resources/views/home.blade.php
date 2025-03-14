@@ -10,8 +10,11 @@
         <!-- Small card component -->
         <div class="small-cards mt-5 mb-4">
             <div class="row">
+
                 <!-- Col sm 6, col md 6, col lg 3 -->
-                <div class="col-sm-6 col-md-6 col-lg-3 mt-3 mt-lg-0">
+                <div class="col-sm-6 col-md-6 col-lg-3 mt-3 mt-lg-0" onclick="window.location='{{ route('users.index') }}'"
+                style="cursor: pointer;"
+                >
                     <!-- Card -->
                     <div class="card border-0 rounded-lg">
                         <!-- Card body -->
@@ -58,7 +61,9 @@
                 </div>
 
                 <!-- Col sm 6, col md 6, col lg 3 -->
-                <div class="col-sm-6 col-md-6 col-lg-3 mt-3 mt-lg-0">
+                <div class="col-sm-6 col-md-6 col-lg-3 mt-3 mt-lg-0" onclick="window.location='{{ route('orders.index') }}'"
+                style="cursor: pointer;"
+                >
                     <!-- Card -->
                     <div class="card border-0 rounded-lg">
                         <!-- Card body -->
@@ -81,7 +86,9 @@
                 </div>
 
                 <!-- Col sm 6, col md 6, col lg 3 -->
-                <div class="col-sm-6 col-md-6 col-lg-3 mt-3 mt-lg-0">
+                <div class="col-sm-6 col-md-6 col-lg-3 mt-3 mt-lg-0" onclick="window.location='{{ route('sellers.index') }}'"
+                style="cursor: pointer;"
+                >
                     <!-- Card -->
                     <div class="card border-0 rounded-lg">
                         <!-- Card body -->
@@ -219,7 +226,7 @@
                                     <table class="table text-dark">
                                         <thead>
                                             <tr class="text-center">
-                                                <th width="10%">#</th>
+                                                <th width="10%">Id</th>
                                                 <th width="20%">Name</th>
                                                 <th width="10%">Avatar</th>
                                                 <th width="30%">Email</th>

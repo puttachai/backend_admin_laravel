@@ -1,5 +1,3 @@
-
-
 @extends('layouts.mainLayout')
 
 @section('content')
@@ -15,6 +13,7 @@
                     <th>สถานะ</th>
                     <th>วันที่สั่งซื้อ</th>
                     <th>รายละเอียด</th>
+                    <th>เปลี่ยนสถานะ</th> <!-- เพิ่มคอลัมน์เปลี่ยนสถานะ -->
                 </tr>
             </thead>
             <tbody>
@@ -32,7 +31,16 @@
                         <td>
                             <a href="{{ route('orders.show', $order->order_id) }}" class="btn btn-info btn-sm">ดูรายละเอียด</a>
                         </td>
-                        {{-- {{ route('orders.show', $order->id) }} --}}
+                        <td>
+                            <!-- Dropdown เลือกสถานะ -->
+                            <select class="form-control status-select" data-order-id="{{ $order->order_id }}">
+                                @foreach ($statuses as $status)
+                                    <option value="{{ $status }}" {{ $order->Status == $status ? 'selected' : '' }}>
+                                        {{ $status }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
@@ -44,4 +52,38 @@
         {{ $orders->links('pagination::bootstrap-4') }}
     </div>
 </div>
+
+<!-- แจ้งเตือนด้วย SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".status-select").forEach(select => {
+            select.addEventListener("change", function() {
+                let orderId = this.getAttribute("data-order-id");
+                let newStatus = this.value;
+
+                fetch(`/orders/${orderId}/update-status`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({ status: newStatus })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire("สำเร็จ!", "เปลี่ยนสถานะเรียบร้อยแล้ว", "success");
+                    } else {
+                        Swal.fire("ผิดพลาด!", "เกิดข้อผิดพลาดในการเปลี่ยนสถานะ", "error");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    Swal.fire("ผิดพลาด!", "ไม่สามารถเปลี่ยนสถานะได้", "error");
+                });
+            });
+        });
+    });
+</script>
 @endsection

@@ -8,7 +8,8 @@
                 <!-- Row -->
                 <div class="row">
                     <!-- Left side -->
-                    <div class="col-md-6 border-0 border-md-right">
+                    <div class="col-md-12 border-0 ">
+                    {{-- <div class="col-md-6 border-0 border-md-right"> --}}
                         <!-- Brand -->
                         <div class="login-brand m-3 m-md-0 d-flex justify-content-center align-items-center">
                             <img src="{{ asset('qbadminui/img/image.png') }}" alt="image" class="w-50 pt-4" style="width: 350px; height: 350px; object-fit: cover;">
@@ -40,11 +41,11 @@
                         </form>
                     </div>
                     <!-- Right side -->
-                    <div class="col-md-6 d-flex flex-column justify-content-center align-items-center pt-3 pt-md-0">
+                    {{-- <div class="col-md-6 d-flex flex-column justify-content-center align-items-center pt-3 pt-md-0">
                         <button class="btn btn-raised btn-primary btn-icon m-2 badge-pill btn-block w-75"><i class="fas fa-at"></i> <p class="d-inline">Sign up with Email</p></button>
                         <button class="btn btn-raised btn-google btn-icon m-2 badge-pill btn-block w-75"><i class="fab fa-google"></i> <p class="d-inline">Sign up with Google</p></button>
                         <button class="btn btn-raised btn-facebook btn-icon m-2 badge-pill btn-block w-75"><i class="fab fa-facebook-f"></i> <p class="d-inline">Sign up with Facebook</p></button>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
